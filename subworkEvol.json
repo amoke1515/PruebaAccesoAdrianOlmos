@@ -1,0 +1,606 @@
+{
+  "name": "subworkEvol",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -220,
+        -40
+      ],
+      "id": "61407e7f-5d49-44ad-b725-413851fef036",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "operation": "getAll",
+        "tableId": "Estudiantes",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -40
+      ],
+      "id": "50c009bc-b68c-4d4b-997f-9a069c9d79da",
+      "name": "getStudent1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "DffSEGKpJbbgdThM",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1560,
+        -40
+      ],
+      "id": "ca8de39a-3b3b-4b93-a0a4-41b9df6b32df",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1780,
+        -40
+      ],
+      "id": "1ec314a8-ce74-4523-a362-a0845151b98b",
+      "name": "Gmail",
+      "webhookId": "b8bed808-eda2-4e5a-9bb1-a36c5bd8ff56",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Qv68we04SYNGeVJP",
+          "name": "Gmail account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1_3VmY3y2Zuql0zBaVuiENoFNTbC4D8O1jzdjiJO9kWI",
+          "mode": "list",
+          "cachedResultName": "Grupos de Acceso",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_3VmY3y2Zuql0zBaVuiENoFNTbC4D8O1jzdjiJO9kWI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_3VmY3y2Zuql0zBaVuiENoFNTbC4D8O1jzdjiJO9kWI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        240,
+        220
+      ],
+      "id": "73dd2c65-e60c-4c0c-8656-e934b04147d0",
+      "name": "Grupo de Acceso",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Lwmo8aij1apha3Vw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "16C4ejrJkoLty8EytORjRBVTyRN4StDDMJZUHtwNw0zI",
+          "mode": "list",
+          "cachedResultName": "Carreras",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16C4ejrJkoLty8EytORjRBVTyRN4StDDMJZUHtwNw0zI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16C4ejrJkoLty8EytORjRBVTyRN4StDDMJZUHtwNw0zI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1640,
+        280
+      ],
+      "id": "a62dfbad-8b53-4ecb-b95e-0a0a9212dd23",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Lwmo8aij1apha3Vw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1sdo3eMqE6z9zJq7Mn1bCKnLYTwPL5zDiQHrqP3RICP8",
+          "mode": "list",
+          "cachedResultName": "Plazos De Inscripcion",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1sdo3eMqE6z9zJq7Mn1bCKnLYTwPL5zDiQHrqP3RICP8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1sdo3eMqE6z9zJq7Mn1bCKnLYTwPL5zDiQHrqP3RICP8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        760,
+        180
+      ],
+      "id": "bdef8505-85e9-4251-a648-321fccf85c44",
+      "name": "Plazos",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Lwmo8aij1apha3Vw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        180
+      ],
+      "id": "61874e3f-2255-4e6e-b95c-3e7142139cc8",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "4zQDdzfe51pGHtSv",
+          "name": "OpenAi account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c7bc3d62-9f41-4e60-a20c-04b843a303d7",
+              "name": "Grupo",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        500
+      ],
+      "id": "2f081d7c-9eb7-4e49-85c9-3e5e882bff3f",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        940,
+        340
+      ],
+      "id": "ba7e17d1-5a5e-4cce-8137-c74fa0239038",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1340,
+        260
+      ],
+      "id": "572342d8-73af-40f6-9cfa-aa37c6f89420",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1140,
+        480
+      ],
+      "id": "c015e551-9b4e-4a31-96c9-1a1fd46d5346",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        580,
+        140
+      ],
+      "id": "03b5cd82-85b2-4034-9182-e1bed9876715",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "4zQDdzfe51pGHtSv",
+          "name": "OpenAi account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        980,
+        160
+      ],
+      "id": "d54fc2a4-d91a-4391-be10-de41bb3c1c96",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "4zQDdzfe51pGHtSv",
+          "name": "OpenAi account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=🎯 Objetivo:\nEres el agente responsable de identificar y describir el grupo de acceso más adecuado para un estudiante universitario, usando su perfil personal y una tabla de referencia alojada en Google Sheets: Grupos de Acceso.\n\n📚 Información Contextual:\nEstudiante: Datos en formato JSON (ver más abajo)\n\nFecha actual: {{ $now }}\n\nIdioma del mensaje: Español\n\nFormato de salida: Texto explicativo, cercano y útil\n\n🔁 Entradas (desde n8n):\nPerfil del estudiante (JSON):\n{\n  \"id\": 5095976655,\n  \"nombre_persona\": \"Juan\",\n  \"via_acceso\": \"Bachillerato\",\n  \"edad\": 18\n}\nGoogle Sheet – Grupos de Acceso\n\nColumnas: IdGrupo, Grupo, Definición, Edad, Experiencia, URL\n\n🧠 Tarea Principal del Agente:\nUsar la información del estudiante ({{ $json.edad }},{{ $json.via_acceso }} ) para identificar el grupo de acceso más adecuado según la tabla.\n\nMostrar el nombre del grupo (Grupo), su descripción (Definición) y, si aplica, el enlace (URL) para más información.\n\nSi faltan datos clave, ofrece una descripción breve de los distintos grupos disponibles y orienta sobre cómo identificarse con uno.\n\n✅ Formato de salida esperado:\n**Mensaje Personalizado segun :\nVia de Acceso: {{ $json.via_acceso }}\nEdad: {{ $json.edad }}\n\n**Mensaje Personalizado segun :\n\n👉 Más información: [Enlace al recurso oficial]\n\nSi no estás seguro de a qué grupo perteneces, te recomendamos revisar las opciones disponibles o escribirnos para ayudarte a determinarlo. 😊\n {{ $json.edad }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        -40
+      ],
+      "id": "55696012-7021-422f-8ecf-dbde196b2426",
+      "name": "Seccion Grupo Acceso"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=🎯 Objetivo:\nEres el agente encargado de informar al estudiante sobre las fechas clave del proceso de admisión según su comunidad autónoma, utilizando la hoja de cálculo Plazos de Matriculación.\n\n📚 Información Contextual:\nCiudad: {{ $('getStudent1').item.json.ciudad }}\n\nFecha actual: {{ $now }}\n\nIdioma: Español\n\nFormato: Breve, claro, con estructura de puntos\n\n🔁 Entradas:\nPerfil del estudiante:\n\n\n{\n  \"ciudad\": \"Madrid\"\n}\nGoogle Sheet – Plazos de Matriculación\n\nColumnas: Comunidad Autónoma, Publicación de Listas, Reclamaciones, Matrícula / Reserva\n\n🧠 Tarea Principal del Agente:\nUtiliza la ciudad para deducir la comunidad autónoma.\n\nBusca en la tabla las fechas relevantes para esa comunidad.\n\nPresenta claramente:\n\nFecha de publicación de listas\n\nPeriodo de reclamaciones\n\nPeriodo de matrícula o reserva\n\nSi no hay ciudad, da un ejemplo orientativo.\n\n✅ Formato de salida esperado:\n\n📅 **Fechas clave en tu comunidad (Ej. : Andalucía)**\n\n- 🗓️ Publicación de listas: 5 de julio de 2025  \n- ❗ Reclamaciones: 6 al 10 de julio  \n- 📝 Matrícula o reserva: 11 al 20 de julio\n\nRecuerda revisar regularmente el portal de tu universidad o contactar con nosotros para confirmar fechas exactas.  \n {{ $('getStudent1').item.json.ciudad }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        620,
+        -40
+      ],
+      "id": "fc5c0b9d-b653-4dd3-b64d-d5fe6e759ed0",
+      "name": "Seccion Plazos"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "🎯 Objetivo:\nEres el agente encargado de sugerir de 3 a 5 carreras universitarias que se ajusten al perfil del estudiante, tomando como referencia sus intereses y asignaturas favoritas, y los datos de la hoja Carreras.\n\n📚 Información Contextual:\nCampos clave: intereses, asignaturas\n\nFecha actual: {{ $now }}\n\nIdioma: Español\n\nEstilo: Cercano, motivador\n\n🔁 Entradas:\nPerfil del estudiante:\n{\n  \"intereses\": [\"Salud\",\"Medio Ambiente\"],\n  \"asignaturas\": [\"Biologia\", \"Quimica\"]\n}\nGoogle Sheet – Carreras\n\nColumnas: Carrera, Intereses (Recomendado para...), Asignaturas típicas\n\n🧠 Tarea Principal del Agente:\nComparar los intereses y asignaturas del estudiante con los campos respectivos de la hoja.\n\nSeleccionar entre 3 y 5 carreras que encajen mejor.\n\nPara cada carrera:\n\nNombra la carrera\n\nExplica brevemente por qué podría gustarle\n\nLista 2-3 asignaturas típicas como ejemplo\n\nSi no hay datos, ofrece ejemplos ilustrativos y motiva a compartir sus preferencias.\n\n✅ Formato de salida esperado:\n\n🎓 **Carreras que podrían interesarte**\n\n1. Psicología – Ideal si te atrae comprender el comportamiento humano y ayudar a los demás.  \n   Asignaturas destacadas: Psicología Social, Neurociencia, Psicopatología.\n\n2. Ingeniería Informática – Recomendado si disfrutas resolver problemas lógicos o crear tecnología.  \n   Asignaturas: Programación, Estructura de Datos, Redes.\n\n3. Educación Infantil – Perfecta para quienes quieren influir en las primeras etapas del aprendizaje.  \n   Asignaturas: Didáctica, Psicología del Desarrollo, Educación Artística.\n\n\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        -40
+      ],
+      "id": "ef3fd9d0-6a49-4811-aa86-c73e5b48c162",
+      "name": "Seccion Carreras"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "16C4ejrJkoLty8EytORjRBVTyRN4StDDMJZUHtwNw0zI",
+          "mode": "list",
+          "cachedResultName": "Carreras",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16C4ejrJkoLty8EytORjRBVTyRN4StDDMJZUHtwNw0zI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16C4ejrJkoLty8EytORjRBVTyRN4StDDMJZUHtwNw0zI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        1180,
+        200
+      ],
+      "id": "5d517446-3649-40e9-8812-a29b84407bae",
+      "name": "Carreras",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Lwmo8aij1apha3Vw",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "id": 5095976655
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "getStudent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getStudent1": {
+      "main": [
+        [
+          {
+            "node": "Seccion Grupo Acceso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grupo de Acceso": {
+      "ai_tool": [
+        [
+          {
+            "node": "Seccion Grupo Acceso",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plazos": {
+      "ai_tool": [
+        [
+          {
+            "node": "Seccion Plazos",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Seccion Grupo Acceso",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Seccion Plazos",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Seccion Carreras",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seccion Grupo Acceso": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Seccion Plazos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seccion Plazos": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Seccion Carreras",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seccion Carreras": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carreras": {
+      "ai_tool": [
+        [
+          {
+            "node": "Seccion Carreras",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6fdc71a4-d999-4e51-b274-546b85239c71",
+  "meta": {
+    "instanceId": "691dc19243ad572e8815fe53086383be39fc134e29ecf19a4fcfe8f97ae4fa8c"
+  },
+  "id": "Jt7NuHnv3tSlqMDy",
+  "tags": []
+}
