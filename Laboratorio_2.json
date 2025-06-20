@@ -1,0 +1,260 @@
+{
+  "name": "Laboratorio 2",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*",
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "164492d3-13c7-48d5-bf4f-9c2b3006965a",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "position": [
+        -880,
+        -120
+      ],
+      "webhookId": "06324b4c-747f-4c29-971e-4ef3864bffe6",
+      "typeVersion": 1,
+      "credentials": {
+        "telegramApi": {
+          "id": "ArwKaSk9aBUSBUKf",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -420,
+        60
+      ],
+      "id": "ce33e4a1-5af5-485f-80e5-c94bef6a0816",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "zIMBnZBVNvJN46QN",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"respuesta\": \"¡Hola! ¿En que puedo ayudarte?\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -60,
+        100
+      ],
+      "id": "4cdba1a4-b20f-4b76-8ead-bee3f95b855e",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# ROL\nEres un asesor orientativo universitario amable, claro y bien informado.\nTu objetivo es ayudar a estudiantes que se comunican por WhatsApp a resolver dudas sobre su futuro académico y trámites universitarios.\n\n# CONTEXTO\nTienes acceso a la información almacenada previamente del estudiante (memoria del chat), como su nivel educativo, intereses, provincia, nota promedio, entre otros datos relevantes.  \nSiempre utiliza esta memoria para personalizar tu respuesta, sin pedirle al usuario datos que ya haya dado antes.\n\n# OBJETIVO\nCuando el estudiante envíe un mensaje, analiza si la categoría del mensaje corresponde a una de las siguientes:\n\n1. **matricula_y_requisitos**: Explica los pasos de inscripción, documentos requeridos, fechas, y requisitos según su perfil.\n2. **carrera_y_nota**: Orienta al estudiante sobre las carreras compatibles con sus intereses y su promedio académico.\n3. **plazos_y_fechas**: Informa sobre fechas importantes, como inscripciones, matrículas, inicio de clases, o pruebas de admisión.\n4. **orientacion_academica**: Ofrece una recomendación más profunda basada en intereses personales, fortalezas y nivel educativo.\n\n# INSTRUCCIONES\n- Si ya tienes todos los datos necesarios en la memoria, responde directamente con información útil.\n- Si **faltan datos importantes**, pregunta al usuario de forma amable y natural. Puedes usar preguntas como:\n  - \"¿Podrías decirme cuál es tu nivel educativo actual?\"\n  - \"¿En qué provincia deseas estudiar?\"\n  - \"¿Qué áreas te interesan para tu carrera universitaria?\"\n\n- Una vez obtengas estos datos, guárdalos en la memoria para no volver a preguntarlos.\n\n# TONO\n- Cercano, profesional y motivador.\n- Adapta el lenguaje según el nivel del estudiante (ej. si es de secundaria, usa un lenguaje sencillo).\n\n# EJEMPLO DE RESPUESTA SI FALTAN DATOS:\n> \"Para poder ayudarte con la matrícula, necesito saber cuál es tu nivel educativo actual y en qué provincia estás. ¿Podrías contármelo?\"\n\n# EJEMPLO DE RESPUESTA SI YA TIENE TODO:\n> \"Gracias por la información. Dado que estás en 5º de secundaria y vives en Lima, puedes postular a una carrera técnica o universitaria. Para la matrícula, necesitarás tu DNI, certificado de estudios y pagar el derecho de inscripción. ¿Te gustaría que te comparta las fechas exactas?\"\n\n# SALIDA\nResponde siempre de forma conversacional y útil, incluyendo toda la información disponible sin repetir datos innecesarios.\n\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "# ROL\nEres un asesor orientativo universitario amable, claro y bien informado.\nTu objetivo es ayudar a estudiantes que se comunican por WhatsApp a resolver dudas sobre su futuro académico y trámites universitarios.\n\n# SALIDA\nResponde siempre de forma conversacional y útil, incluyendo toda la información disponible sin repetir datos innecesarios.\n\n# FORMATO DE SALIDA\n\n{\n  \"respuesta\": { \"type\": \"string\" }\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -360,
+        -120
+      ],
+      "id": "961c46b1-37ac-4946-8ac9-070635b0f8bd",
+      "name": "Clasificador"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id_act",
+              "value": "={{ $json.update_id }}"
+            },
+            {
+              "name": "mensaje_act",
+              "value": "={{ $json.message.text }}"
+            },
+            {
+              "name": "username_act",
+              "value": "={{ $json.message.chat.username }}"
+            },
+            {
+              "name": "role_act",
+              "value": "={{ $json.message.from.is_bot }}"
+            },
+            {
+              "name": "time_stamp_act",
+              "value": "={{ $json.message.date }}"
+            }
+          ],
+          "number": [
+            {
+              "name": "chat_act",
+              "value": "={{ $json.message.chat.id }}"
+            },
+            {
+              "name": "msg_id_act",
+              "value": "={{ $json.message.message_id }}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "44602b95-fe1d-44d6-93bc-ffa4fb82aebf",
+      "name": "Mensaje Actual",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -640,
+        -120
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.update_id }}{{ $('Telegram Trigger').item.json.message }}{{ $('Telegram Trigger').item.json.message.chat }}{{ $('Telegram Trigger').item.json.message.date }}{{ $('Telegram Trigger').item.json.message.text }}",
+        "databaseName": "sample_mflix",
+        "contextWindowLength": 4
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        80
+      ],
+      "id": "bf009aa6-1980-4357-96c2-56d772e309e9",
+      "name": "MongoDB Chat Memory",
+      "credentials": {
+        "mongoDb": {
+          "id": "SgUvFWtJHMXQUZLv",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        60,
+        -120
+      ],
+      "id": "cb7fa34f-d5d7-4fc3-8621-46631e19418f",
+      "name": "Telegram",
+      "webhookId": "388d1ee4-ad7d-44d9-8ff1-704d067db1dc",
+      "credentials": {
+        "telegramApi": {
+          "id": "ArwKaSk9aBUSBUKf",
+          "name": "Telegram account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Actual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Clasificador",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Clasificador",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Actual": {
+      "main": [
+        [
+          {
+            "node": "Clasificador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Clasificador",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clasificador": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "43ab8486-b103-43de-b73e-da25c7f6e99f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "691dc19243ad572e8815fe53086383be39fc134e29ecf19a4fcfe8f97ae4fa8c"
+  },
+  "id": "tnGmPbdFx3MQ6Vtm",
+  "tags": []
+}

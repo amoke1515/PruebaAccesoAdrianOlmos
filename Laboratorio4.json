@@ -1,0 +1,625 @@
+{
+  "name": "Laboratorio4",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1760,
+        540
+      ],
+      "id": "73276ef4-ff9f-4c61-9a6d-274ad6241d83",
+      "name": "Telegram Trigger",
+      "webhookId": "6ac3a698-58ad-4be7-b2fc-cf053c87cd4a",
+      "credentials": {
+        "telegramApi": {
+          "id": "ArwKaSk9aBUSBUKf",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Hola! 👋 Bienvenido a tu asistente virtual de orientación universitaria. Estoy aquí para ayudarte a tomar decisiones sobre tu futuro académico.  \nConmigo podrás: \n🎓  Descubrir qué grado encaja contigo según tus intereses \n📚  Saber qué vías de acceso tienes disponibles a la universidad \n🎯  Resolver dudas sobre requisitos, notas de corte y plazos importantes \n📅  Obtener información específica sobre carreras, universidades y trámites \n\nPara empezar, ¿puedes decirme tu nombre?",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1040,
+        860
+      ],
+      "id": "38825397-7928-457b-94ac-889ac38199bd",
+      "name": "Bienvenida",
+      "webhookId": "9ff49ef2-3827-4eda-a57d-643ae0d2b082",
+      "credentials": {
+        "telegramApi": {
+          "id": "ArwKaSk9aBUSBUKf",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.id}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "number",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "57a50086-a1e8-4165-835f-31beeeab6984"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "registrado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bf4b0dec-aa57-44cc-8dbb-300573e095f2",
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "completo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "completo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bdc78f05-1908-407a-b44f-cfe5bb2391a5",
+                    "leftValue": "={{ $json}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "no registrado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1200,
+        520
+      ],
+      "id": "a6a5d349-0530-466a-ba13-37b4def6996f",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un modelo de IA especializado en extracción de datos desde lenguaje natural.\n\nTarea:\n1. Si \"{{ $json.search.estado }}\" tiene un valor distinto de \"null\", analiza el contenido del campo \"{{ $json.search.mensaje }}\" y extrae exclusivamente la información directamente relacionada con ese tema.\n3. Si no encuentras información relevante, responde con: output = [\"NoINFO\"].\n4. Si encuentras información, respóndela en un array llamado output, conteniendo solo los datos extraídos, sin explicaciones ni texto adicional.\n\nFormato de entrada:\n[\n  {\n    \"search\": {\n      \"estado\": \"{{ $json.search.estado }}\",\n      \"mensaje\": \"{{ $json.search.mensaje }}\"\n    }\n  }\n]\n\nFormato de salida:\noutput = [ ... ]\n\n---\n\n### 🧪 EJEMPLOS:\n\n**Ejemplo 1:**  \n```json\n{\n  \"search\": {\n    \"estado\": \"nombre\",\n    \"mensaje\": \"Buenas tardes, soy Adrian\"\n  }\n}\noutput = [\"Adrian\"]\n\n{\n  \"search\": {\n    \"estado\": \"edad\",\n    \"mensaje\": \"Hola, me llamo Laura y tengo 21 años\"\n  }\n}\noutput = [\"21\"]\n\nEjemplo 3:\n\n{\n  \"search\": {\n    \"estado\": \"ciudad\",\n    \"mensaje\": \"Vivo actualmente en Valencia, aunque nací en Sevilla\"\n  }\n}\noutput = [\"Valencia\"]\n\nEjemplo 4:\n\n{\n  \"search\": {\n    \"estado\": \"nota de acceso a la universidad\",\n    \"mensaje\": \"Mi nota de acceso fue de 12.45 sobre 14\"\n  }\n}\noutput = [\"12.45\"]\n\nEjemplo 5:\n\n{\n  \"search\": {\n    \"estado\": \"interes\",\n    \"mensaje\": \"Me interesa especialmente la biotecnología y la inteligencia artificial\"\n  }\n}\noutput = [\"biotecnología\", \"inteligencia artificial\"]\n\nEjemplo 6:\n\n{\n  \"search\": {\n    \"estado\": \"asignaturas favoritas\",\n    \"mensaje\": \"Mis asignaturas favoritas son matemáticas y física\"\n  }\n}\noutput = [\"matemáticas\", \"física\"]\n\nEjemplo 7:\n\n{\n  \"search\": {\n    \"estado\": \"correo\",\n    \"mensaje\": \"Mi correo es a1@mail.com\"\n  }\n}\noutput = [\"a1@mail.com\"]\n\nEjemplo 8:\n\n{\n  \"search\": {\n    \"estado\": \"nombre\",\n    \"mensaje\": \"Mi correo es usuario123@gmail.com\"\n  }\n}\noutput = [\"NoINFO\"]\n\nEjemplo 9:\n\n{\n  \"search\": {\n    \"estado\": \"intereses\",\n    \"mensaje\": \"Hola, me llamo Andrea y tengo 19 años\"\n  }\n}\noutput = [\"NoINFO\"]\n\nEjemplo 10:\n\n{\n  \"search\": {\n    \"estado\": \"edad\",\n    \"mensaje\": \"Hola, soy Tomás, encantado de conocerte\"\n  }\n}\noutput = [\"NoINFO\"]\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Eres un modelo de IA especializado en extracción de datos desde lenguaje natural."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -840,
+        180
+      ],
+      "id": "7a6a4209-4a72-409e-a5b7-e5eeea544882",
+      "name": "Stater"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-nano"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -860,
+        400
+      ],
+      "id": "bd368d48-1efc-4bc0-bd65-cab62bd86b5e",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "zIMBnZBVNvJN46QN",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=22222222222222",
+        "contextWindowLength": 1
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -740,
+        420
+      ],
+      "id": "977a463a-e4b2-4272-860b-a963334d2ee1",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4bcd4a8f-3965-49b4-94a3-a0dfa3fdd73b",
+              "leftValue": "",
+              "rightValue": "NoINFO",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        180
+      ],
+      "id": "d8aabf39-5583-44cf-a9d3-451bb631d705",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Recoge datos de nodos anteriores\nconst mensaje = $('Telegram Trigger').first().json.message.text;\nconst estado = $input.first().json.estado;\n\n\n// Devuelve un nuevo objeto como array (n8n siempre espera arrays)\nreturn [ \n  {\n    search:  {\n      estado,\n      mensaje\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1060,
+        180
+      ],
+      "id": "3ef29613-5600-4d80-a105-41e7e55fc3ec",
+      "name": "estado/msg"
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "operation": "getAll",
+        "tableId": "Estudiantes",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.message.from.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1560,
+        540
+      ],
+      "id": "2025e1a9-9c37-42ba-b691-54a54bc01e49",
+      "name": "getStudent",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "DffSEGKpJbbgdThM",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "tableId": "Estudiantes",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id",
+              "fieldValue": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+            },
+            {
+              "fieldId": "nombre_persona",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "via_acceso",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "intereses",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "asignaturas",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "ciudad",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "grado",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "nombre_persona"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        860
+      ],
+      "id": "b1f79fec-c887-4e30-acfd-88edfa1618f5",
+      "name": "createStudent",
+      "credentials": {
+        "supabaseApi": {
+          "id": "DffSEGKpJbbgdThM",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el estado actual del estudiante desde el JSON de entrada\nconst estado = $input.first().json.estado;\n\n// Mensajes para cada paso del proceso\nconst preguntas = {\n  edad: \"¿Cuál es tu edad?\",\n  via_acceso: \"¿Cuál es tu vía de acceso (Bachillerato, FP...)?\",\n  ciudad: \"¿En qué ciudad resides?\",\n  nota_acceso: \"¿Qué nota de acceso tienes?\",\n  asignaturas: \"¿Cuáles son tus asignaturas favoritas?\",\n  intereses: \"¿Qué temas o áreas te interesan?\",\n  completado: \"Gracias, ya hemos terminado tu registro.\"\n};\n\n// Selecciona el mensaje correspondiente al estado actual\nconst salida = preguntas[estado] || \"No se ha reconocido el estado actual.\";\n\nreturn [\n  {\n    json: {\n      mensaje: salida\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        100
+      ],
+      "id": "52cc55ba-764b-48d1-9c3b-6790d5c1aeb3",
+      "name": "FaltanCampos?3"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Disculpa, no te he entendido bien. ¿Puedes repetir?",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        40,
+        340
+      ],
+      "id": "2520e976-d42a-4fa2-95d0-671cddc5e020",
+      "name": "error",
+      "webhookId": "c42d9653-73f6-413f-a765-8bb19f0b974a",
+      "credentials": {
+        "telegramApi": {
+          "id": "ArwKaSk9aBUSBUKf",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "817acac5-22e7-44df-b22a-34613cb8565f",
+              "name": "campo",
+              "value": "={{ $('estado/msg').item.json.search.estado }}",
+              "type": "string"
+            },
+            {
+              "id": "e3b6a2d1-82cc-4437-86a6-738575d4bf36",
+              "name": "valor",
+              "value": "={{ $('Stater').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        40,
+        100
+      ],
+      "id": "bf249909-1219-42a6-96ed-481000efad53",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Telegram Trigger').item.json.message.from.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "={{ $json.campo }}",
+              "fieldValue": "={{ $json.valor }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        260,
+        100
+      ],
+      "id": "37938889-38d5-43b7-8b66-3ce1a592b64f",
+      "name": "updateStudent",
+      "credentials": {
+        "supabaseApi": {
+          "id": "DffSEGKpJbbgdThM",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.mensaje }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        700,
+        100
+      ],
+      "id": "781bc9a0-0b80-49b4-ba64-3e466c2a0ae5",
+      "name": "Telegram",
+      "webhookId": "437e84fc-0ce8-4e52-b9b3-943fce20a565",
+      "credentials": {
+        "telegramApi": {
+          "id": "ArwKaSk9aBUSBUKf",
+          "name": "Telegram account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "getStudent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "createStudent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "estado/msg",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stater": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Stater",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Stater",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "estado/msg": {
+      "main": [
+        [
+          {
+            "node": "Stater",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getStudent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FaltanCampos?3": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "updateStudent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "updateStudent": {
+      "main": [
+        [
+          {
+            "node": "FaltanCampos?3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f61d76ee-f49b-4448-8a9a-4536971b6493",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "691dc19243ad572e8815fe53086383be39fc134e29ecf19a4fcfe8f97ae4fa8c"
+  },
+  "id": "KHVnqLMh2vttk8Xe",
+  "tags": []
+}

@@ -1,0 +1,1573 @@
+{
+  "name": "EduBot",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -120,
+        0
+      ],
+      "id": "49159105-7f0a-4cf4-9f39-40c4fdc985f7",
+      "name": "Telegram Trigger",
+      "webhookId": "dd9ed4cb-1f98-4843-8cf1-b2dc1ea0da6f",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "Estudiantes",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.message.from.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        60,
+        0
+      ],
+      "id": "c9f202d2-dbe6-47af-b1c4-edb585953a97",
+      "name": "Supabase",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Recoge datos de nodos anteriores\nconst mensaje = $('Telegram Trigger').first().json.message.text;\nconst estado = $input.first().json.estado;\nconst id = $input.first().json.id\nconst nombre = $input.first().json.nombre\nconst edad = $input.first().json.edad\nconst ciudad = $input.first().json.ciudad\nconst via_acceso = $input.first().json.via_acceso\nconst asignaturas = $input.first().json.asignaturas\nconst intereses = $input.first().json.intereses\nconst mail = $input.first().json.mail\n\n\n\n// Devuelve un nuevo objeto como array (n8n siempre espera arrays)\nreturn [ \n  {\n    output : {\n      estado,\n      mensaje,\n      id,\n      nombre,\n      edad,\n      ciudad,\n      via_acceso,\n      asignaturas,\n      intereses,\n      mail,\n  }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        860,
+        -380
+      ],
+      "id": "24e797c3-4262-4930-aee5-88dfdb5c99bc",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "nombre",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "57a50086-a1e8-4165-835f-31beeeab6984"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "nombre"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f916ea12-625e-455a-ab10-d84bcae056a0",
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "edad",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "edad"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fd6f586e-914c-4da9-8219-8b3896ddb22e",
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "ciudad",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ciudad"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b8357d45-e519-4bce-bdc5-cd6465589d17",
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "via_acceso",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "via_acceso"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "31dea2ab-2fef-4dd5-9c07-952ba31418e2",
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "asignaturas",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "asignaturas"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "26f78003-3d27-41b8-86e9-5603f8415e9e",
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "intereses",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "intereses"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bf4b0dec-aa57-44cc-8dbb-300573e095f2",
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "mail",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "mail"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1920,
+        -480
+      ],
+      "id": "a09afb28-c5bd-427f-b99e-ef7da30ef01e",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "estado",
+              "fieldValue": "=edad"
+            },
+            {
+              "fieldId": "nombre",
+              "fieldValue": "={{ $json.info[0] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -980
+      ],
+      "id": "67f03614-3eb6-47cf-9b11-b151b76d6c3c",
+      "name": "mombre",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "estado",
+              "fieldValue": "=ciudad"
+            },
+            {
+              "fieldId": "edad",
+              "fieldValue": "={{ $json.info[0] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -820
+      ],
+      "id": "97f92ff2-3a6c-4f5d-850c-ea28c0c41914",
+      "name": "edad",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "estado",
+              "fieldValue": "=via_acceso"
+            },
+            {
+              "fieldId": "ciudad",
+              "fieldValue": "={{ $json.info[0] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -640
+      ],
+      "id": "da685b82-d21a-42f1-83dc-d12b6ec3c38d",
+      "name": "ciudad",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "estado",
+              "fieldValue": "=asignaturas"
+            },
+            {
+              "fieldId": "intereses",
+              "fieldValue": "={{ $json.info[0] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -480
+      ],
+      "id": "0fc7688a-fdbf-462d-897e-9c81ee817347",
+      "name": "via_acceso",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "estado",
+              "fieldValue": "=intereses"
+            },
+            {
+              "fieldId": "asignaturas",
+              "fieldValue": "={{ $json.info }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -320
+      ],
+      "id": "914a9fb3-cc31-400c-ae35-4c53404ac1ac",
+      "name": "asignaturas",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "estado",
+              "fieldValue": "=mail"
+            },
+            {
+              "fieldId": "intereses",
+              "fieldValue": "={{ $json.info }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -140
+      ],
+      "id": "0c4f684c-3b63-47d5-b7d4-bf224621c26f",
+      "name": "intereses",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=¿En qué ciudad resides?",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2460,
+        -820
+      ],
+      "id": "d12284d0-3b68-4696-9d77-b4a08709cbbe",
+      "name": "Telegram1",
+      "webhookId": "b68f8372-ca55-40c9-b837-685b003568e6",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=\"¿Cuál es tu vía de acceso (Bachillerato, FP...)?\"",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2460,
+        -640
+      ],
+      "id": "04a31a2a-d923-4040-b365-b8d2139fd223",
+      "name": "Telegram2",
+      "webhookId": "b68f8372-ca55-40c9-b837-685b003568e6",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=¿Cuáles son tus asignaturas favoritas?",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2460,
+        -480
+      ],
+      "id": "9f9ad482-b253-4f68-bd2f-d1deac8d577c",
+      "name": "Telegram3",
+      "webhookId": "b68f8372-ca55-40c9-b837-685b003568e6",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=¿Qué temas o áreas te interesan?",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2460,
+        -320
+      ],
+      "id": "635c68fb-c443-4d6c-b6b9-7d052b039302",
+      "name": "Telegram4",
+      "webhookId": "b68f8372-ca55-40c9-b837-685b003568e6",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Perfecto, ya tenemos toda la informacion necesaria. Ahora te mandaremos un correo con nuestras sugerencias.¿Puedes darme tu Correo?",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2420,
+        -140
+      ],
+      "id": "63ddfcd8-f73c-424a-bf0b-9e0a6122a705",
+      "name": "Telegram6",
+      "webhookId": "b68f8372-ca55-40c9-b837-685b003568e6",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Genial! Danos un momento que validemos tus datos...",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2240,
+        40
+      ],
+      "id": "2414db5a-a805-4cb0-894d-a31e508026ac",
+      "name": "Telegram7",
+      "webhookId": "b68f8372-ca55-40c9-b837-685b003568e6",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=¿Cuál es tu edad?",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2460,
+        -980
+      ],
+      "id": "26cc9c00-c800-4000-8df1-8943a9822a40",
+      "name": "Telegram5",
+      "webhookId": "b68f8372-ca55-40c9-b837-685b003568e6",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=AGENTE: Extracción y Actualización según Estado\n\n## Objetivo:\nEres un modelo de IA especializado en análisis de lenguaje natural para extraer información específica basada en un estado predefinido desde entradas de texto en lenguaje libre, y actualizar el objeto JSON original con dicha información.\n\n## Tarea Principal:\nProcesa una entrada JSON y analiza su campo \"{{ $json.output.estado }}\" junto con el texto recibido desde un mensaje de Telegram ({{ $json.output.mensaje }}). Debes extraer información relevante solo relacionada con ese estado y devolver el objeto JSON enriquecido:\n\n- Añadiendo un campo \"info\" con un array que contenga la(s) información(es) extraída(s).\n- Actualizando el campo del objeto cuyo nombre es el valor de \"{{ $json.output.estado }}\" con la información extraída, siguiendo las reglas detalladas abajo.\n\n## Entradas:\nEl JSON de entrada tendrá la estructura general, incluyendo al menos:\n\n{\n  \"estado\": \"valor\",\n  \"mensaje\": \"texto libre del usuario\",\n  ...\n}\n\n## Instrucciones:\n\n1. Comprobar el valor de \"{{ $json.output.estado }}\":\n   - Si es null, \"null\" (sin importar mayúsculas/minúsculas) o una cadena vacía, no analizar el texto.\n   - Devuelve el mismo JSON original, agregando el campo `\"info\": []`.\n\n2. Si \"{{ $json.output.estado }}\" tiene un valor válido:\n   - Analiza el texto en \"mensaje\".\n   - Extrae solo la información relevante relacionada con ese estado.\n   - Si no se encuentra información relevante, añade `\"info\": [\"NoINFO\"]` y no modifiques ningún otro campo.\n   - Si se encuentra información relevante, añade `\"info\": [...]` con los datos extraídos.\n\n3. Actualización del campo según \"estado\":\n   - Solo si `\"info\"` contiene información útil (no `\"NoINFO\"`):\n     - Si `\"info\"` tiene un solo elemento, actualiza el campo del estado con ese string.\n     - Si `\"info\"` tiene varios elementos, actualiza el campo del estado con el array completo.\n   - En caso contrario, no modifiques el campo correspondiente al estado.\n\n4. No modifiques ningún otro campo del JSON original.\n\n## Ejemplos:\n\nInput:\n\n{\n  \"estado\": \"nombre_persona\",\n  \"mensaje\": \"Me llamo Camila Rodríguez.\",\n  ...\n}\n\nOutput:\n\n{\n  \"estado\": \"nombre_persona\",\n  \"mensaje\": \"Me llamo Camila Rodríguez.\",\n  ...\n  \"info\": [\"Camila Rodríguez\"],\n  \"nombre_persona\": \"Camila Rodríguez\"\n}\n\n---\n\nInput:\n\n{\n  \"estado\": \"asignaturas\",\n  \"mensaje\": \"Mis asignaturas favoritas son física y química\",\n  ...\n}\n\nOutput:\n\n{\n  \"estado\": \"asignaturas\",\n  \"mensaje\": \"Mis asignaturas favoritas son física y química\",\n  ...\n  \"info\": [\"física\", \"química\"],\n  \"asignaturas\": [\"física\", \"química\"]\n}\n\n---\n\nInput:\n\n{\n  \"estado\": \"nombre\",\n  \"mensaje\": \"No doy mi nombre.\",\n  ...\n}\n\nOutput:\n\n{\n  \"estado\": \"nombre\",\n  \"mensaje\": \"No doy mi nombre.\",\n  ...\n  \"info\": [\"NoINFO\"]\n}\n\n---\n\nInput:\n\n{\n  \"estado\": \"null\",\n  \"mensaje\": \"Me llamo Carla.\",\n  ...\n}\n\nOutput:\n\n{\n  \"estado\": \"null\",\n  \"mensaje\": \"Me llamo Carla.\",\n  ...\n  \"info\": []\n}\n\n---\n\n## Restricciones adicionales:\n\n- El resultado debe ser un JSON válido, listo para ser procesado por el nodo de salida de IA en n8n.\n- Evita explicaciones adicionales o etiquetas en el campo \"info\". Solo devuelve los datos puros.\n- Mantén todos los campos originales sin modificar excepto los indicados.\n- En la salida, el estado debe ser el mismo que en la entrada\n\nJSON de entrada:\n{{ $json.output }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        -380
+      ],
+      "id": "5aad7e90-9d14-4b19-bc07-0e77b0c3b77e",
+      "name": "Stater"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1000,
+        -180
+      ],
+      "id": "853e3cdb-a441-42c6-bb5a-5cb7a63d5e1f",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "JDVOrLXvIdyF2CGh",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=22222222222222",
+        "contextWindowLength": 1
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1200,
+        -160
+      ],
+      "id": "23ae57ca-5bda-4c37-a98e-ba322333cc16",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  try {\n    return {\n      json: JSON.parse(item.json.output) \n      \n    };\n  } catch (e) {\n    return {\n      json: { error: \"Formato inválido\", raw: item.json.output }\n    };\n  }\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1460,
+        -380
+      ],
+      "id": "def0f64e-6626-4b04-8bf9-c664f1f5e8d6",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Hola! 👋 Bienvenido a tu asistente virtual de orientación universitaria. Estoy aquí para ayudarte a tomar decisiones sobre tu futuro académico.  \nConmigo podrás: \n🎓  Descubrir qué grado encaja contigo según tus intereses \n📚  Saber qué vías de acceso tienes disponibles a la universidad \n🎯  Resolver dudas sobre requisitos, notas de corte y plazos importantes \n📅  Obtener información específica sobre carreras, universidades y trámites \n\nEmpezaré con una serie de preguntas, para conocerte mejor. \n\nA mi, me llaman Edu... y a ti?",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        600,
+        0
+      ],
+      "id": "bb0c9c96-399c-4dfb-9726-e0fa4a49a8ba",
+      "name": "Bienvenida",
+      "webhookId": "c7bd5eb2-6e86-4bd1-8ad0-fce3297ceba4",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "Estudiantes",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id",
+              "fieldValue": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+            },
+            {
+              "fieldId": "nombre",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "via_acceso",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "intereses",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "asignaturas",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "ciudad",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "nombre"
+            },
+            {
+              "fieldId": "mail",
+              "fieldValue": "null"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        840,
+        0
+      ],
+      "id": "b52f57fa-1e51-44eb-a471-abc62eb53e25",
+      "name": "createStudent",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $('Supabase').item.json.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        40
+      ],
+      "id": "8c3d77da-9a73-4b39-816c-7280da6ec5db",
+      "name": "Supabase2",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let item = $input.first().json;\n\n// Función para convertir string \"null\", números y arrays serializados\nfunction parsearCampo(valor) {\n  if (typeof valor !== \"string\") return valor;\n  const val = valor.trim();\n\n  if (val.toLowerCase() === \"null\") return null;\n  if (!isNaN(val) && val !== \"\") return Number(val);\n  \n  try {\n    const parsed = JSON.parse(val);\n    return parsed;\n  } catch {\n    return val;\n  }\n}\n\n// Aplicar parsing a cada campo esperado\nitem.nombre = parsearCampo(item.nombre);\nitem.edad = parsearCampo(item.edad);\nitem.ciudad = parsearCampo(item.ciudad);\nitem.via_acceso = parsearCampo(item.via_acceso);\nitem.asignaturas = parsearCampo(item.asignaturas);\nitem.intereses = parsearCampo(item.intereses);\nitem.mail = parsearCampo(item.mail);\n\n// Validaciones auxiliares\nfunction esTextoValido(valor) {\n  return typeof valor === \"string\" && valor.trim() !== \"\";\n}\n\nfunction esNumeroValido(valor, min, max) {\n  return typeof valor === \"number\" && valor >= min && valor <= max;\n}\n\nfunction esArrayDeTextosValidos(arr) {\n  return Array.isArray(arr) && arr.length > 0 && arr.every(val => esTextoValido(val));\n}\n\n// Mapeo para mensajes visuales\nconst campoVisual = {\n  nombre: \"Nombre\",\n  ciudad: \"Ciudad\",\n  edad: \"Edad\",\n  via_acceso: \"Vía de Acceso\",\n  intereses: \"Intereses\",\n  asignaturas: \"Asignaturas Favoritas\",\n  mail: \"Mail\"\n};\n\n// Array para guardar estados con error\nlet estadosError = [];\n\n// Validar campos y agregar a estadosError si no válido\nif (!esTextoValido(item.nombre)) estadosError.push(\"nombre\");\nif (!esTextoValido(item.ciudad)) estadosError.push(\"ciudad\");\nif (!esNumeroValido(item.edad, 0, 120)) estadosError.push(\"edad\");\nif (!esTextoValido(item.via_acceso)) estadosError.push(\"via_acceso\");\nif (!esArrayDeTextosValidos(item.intereses)) estadosError.push(\"intereses\");\nif (!esArrayDeTextosValidos(item.asignaturas)) estadosError.push(\"asignaturas\");\nif (!esTextoValido(item.mail)) estadosError.push(\"mail\");\n\n// Crear mensaje con los nombres visuales de los campos con error\nif (estadosError.length > 0) {\n  const camposMensaje = estadosError.map(campo => campoVisual[campo]);\n  return {\n    mensaje: `Vale, parece que no hemos entendido bien tu: -${camposMensaje.join(\" | \")}`,\n    estados: estadosError\n  };\n} else {\n  return {\n    mensaje: \"¡Gracias! He recibido correctamente todos tus datos. ✅\",\n    estados: []\n  };\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        40
+      ],
+      "id": "dd2ff261-bac9-434f-88d9-15c5e0d2bbe5",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "250dede3-fb59-4b05-ab8c-45af45e00f49",
+              "leftValue": "={{ $json.mensaje }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2820,
+        40
+      ],
+      "id": "06705fd2-43c8-47c6-98d7-65d7b9dbfe2e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "estado",
+              "fieldValue": "completadp"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3020,
+        140
+      ],
+      "id": "25a42f29-196e-44d5-acbd-1a65181652be",
+      "name": "Supabase3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $json;  // JSON completo con estado y mensaje\n\nconst estado = input.estado ? input.estado.toString().toLowerCase() : null;\nconst mensaje = input.mensaje ? input.mensaje.toString() : \"\";\n\n// Función para extraer info según estado y texto\nfunction extraerInfo(estado, texto) {\n  if (!estado || estado === \"null\" || estado === \"\") {\n    return [];\n  }\n\n  let info = [];\n\n  if (estado === \"nombre_persona\" || estado === \"nombre\") {\n    const regexNombre = /(?:mi nombre es|me llamo|soy|atentamente,?)\\s*([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*)/i;\n    const match = texto.match(regexNombre);\n    if (match && match[1]) {\n      info.push(match[1].trim());\n    } else if (/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/.test(texto.trim())) {\n      info.push(texto.trim());\n    }\n  } \n  else if (estado === \"ciudad\") {\n    const ciudades = [\n      \"Valencia\", \"Madrid\", \"Barcelona\", \"Sevilla\", \"Bilbao\", \"Zaragoza\", \"Málaga\", \n      \"Murcia\", \"Palma\", \"Las Palmas\", \"Granada\", \"Alicante\", \"Córdoba\", \"Valladolid\",\n      \"Vigo\", \"Gijón\", \"L'Hospitalet\", \"La Coruña\", \"Elche\", \"Oviedo\"\n    ];\n    for (const ciudad of ciudades) {\n      if (texto.toLowerCase().includes(ciudad.toLowerCase())) {\n        info.push(ciudad);\n        break;\n      }\n    }\n  }\n  else if (estado === \"via_acceso\") {\n    const opciones = [\n      \"Bachillerato\", \"FP\", \"Formación Profesional\", \"Universidad\", \"ESO\", \"Grado Medio\", \n      \"Grado Superior\", \"Máster\", \"Doctorado\", \"Curso de acceso\", \"Pruebas de acceso\"\n    ];\n    for (const op of opciones) {\n      if (texto.toLowerCase().includes(op.toLowerCase())) {\n        info.push(op);\n        break;\n      }\n    }\n  }\n  else if (estado === \"asignaturas\") {\n    const asignaturas = [\n      \"física\", \"química\", \"matemáticas\", \"biología\", \"historia\", \"literatura\",\n      \"geografía\", \"filosofía\", \"economía\", \"informática\", \"lengua\", \"arte\",\n      \"educación física\", \"música\", \"plástica\", \"ciencias sociales\"\n    ];\n    for (const asig of asignaturas) {\n      if (texto.toLowerCase().includes(asig)) {\n        info.push(asig);\n      }\n    }\n  }\n  else if (estado === \"intereses\") {\n    const intereses = [\n      \"deportes\", \"música\", \"arte\", \"tecnología\", \"viajar\", \"ciencia\",\n      \"cine\", \"literatura\", \"videojuegos\", \"fotografía\", \"programación\",\n      \"lectura\", \"voluntariado\", \"gastronomía\", \"dibujo\", \"danza\"\n    ];\n    for (const interes of intereses) {\n      if (texto.toLowerCase().includes(interes)) {\n        info.push(interes);\n      }\n    }\n  }\n  else if (estado === \"mail\") {\n    const emailRegex = /\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b/i;\n    const emailMatch = texto.match(emailRegex);\n    if (emailMatch) {\n      info.push(emailMatch[0]);\n    }\n  }\n\n  if (info.length === 0) {\n    return [\"NoINFO\"];\n  }\n\n  return info;\n}\n\nconst infoExtraida = extraerInfo(estado, mensaje);\n\nconst output = { ...input };\n\noutput.info = infoExtraida;\n\nif (infoExtraida.length > 0 && !(infoExtraida.length === 1 && infoExtraida[0] === \"NoINFO\")) {\n  output[estado] = (infoExtraida.length === 1) ? infoExtraida[0] : infoExtraida;\n}\n\nreturn output;\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        -160
+      ],
+      "id": "36655428-cfe7-4f3b-ba74-32928f3a0893",
+      "name": "Code Tool"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram7').item.json.result.chat.id }}",
+        "text": "=¡Vaya! Encontramos error en los siguientes campos:\n\n{{ $json.erroresCadena }}\n\nMándanos los datos en el siguiente formato para evitar malentendidos:\n\n \"campo\" : \"valor\"\n\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3480,
+        -60
+      ],
+      "id": "8b1ddd80-b04c-47c4-bcd8-233a9176a469",
+      "name": "Telegram8",
+      "webhookId": "db574629-3d2b-435a-b521-8742a5cd3ba8",
+      "credentials": {
+        "telegramApi": {
+          "id": "UzFuaN4lC6bsQAKH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Estudiantes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Supabase2').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "estado",
+              "fieldValue": "=error"
+            },
+            {
+              "fieldId": "errores",
+              "fieldValue": "={{ $json.estados }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3020,
+        -60
+      ],
+      "id": "8ba823c6-4f04-424e-90d2-4a4b54478944",
+      "name": "Supabase4",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "error",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEquals"
+                    },
+                    "id": "21d4159c-bfec-4572-9d1d-04cdf2233683"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "registrado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "16fc420e-a70f-4854-9de5-31a6fd8c4488",
+                    "leftValue": "={{ $json}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "no_registrado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "dd705a1e-e9ca-4607-a94f-252ff507e0db",
+                    "leftValue": "={{ $json.estado }}",
+                    "rightValue": "error",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "error"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        240,
+        0
+      ],
+      "id": "c9f9fef5-bcfa-4f19-9c1d-bbae9f229fbf",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "tableId": "Estudiantes",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id",
+              "fieldValue": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+            },
+            {
+              "fieldId": "nombre",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "via_acceso",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "intereses",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "asignaturas",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "ciudad",
+              "fieldValue": "null"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "nombre"
+            },
+            {
+              "fieldId": "mail",
+              "fieldValue": "null"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        740,
+        180
+      ],
+      "id": "6e4454f1-a705-46ac-9e6a-e3b2e75041a3",
+      "name": "createStudent1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "cPLQJ9rtmM2oaxxq",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f821d8f3-1b0e-4518-b3e2-8461e84ac22d",
+              "name": "errores[0]",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        180
+      ],
+      "id": "f56e3101-edc2-4ed1-a163-d5f6c6948739",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0fb3a914-082d-4598-a68b-e4e4194f88ad",
+              "name": "estado",
+              "value": "={{ $('Code').item.json.output.estado }}",
+              "type": "string"
+            },
+            {
+              "id": "b44a5937-b19c-412a-9b1a-60f98a1eb795",
+              "name": "mensaje",
+              "value": "={{ $json.mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "1095339a-e791-474e-84bb-a603ac8e1fec",
+              "name": "intereses",
+              "value": "={{ $json.intereses }}",
+              "type": "string"
+            },
+            {
+              "id": "a94788e6-7bb6-4948-a6d5-7850269cb946",
+              "name": "info",
+              "value": "={{ $json.info }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        -380
+      ],
+      "id": "0dace4a1-414a-43cb-b266-f8262d920882",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = items[0].json;\n\nconst camposARevisar = [\"via_acceso\", \"mail\"];  // campos a revisar\nconst errores = [];\n\nfor (const campo of camposARevisar) {\n  if (\n    data[campo] === null ||\n    data[campo] === \"null\" ||\n    data[campo] === \"\"\n  ) {\n    errores.push(campo);\n  }\n}\n\n// Crear una cadena con los valores separados por coma\nconst erroresCadena = errores.join(\", \");\n\nreturn [{ json: { erroresCadena } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3240,
+        -60
+      ],
+      "id": "5c2ed052-9011-4403-97f5-8b617e150326",
+      "name": "Code3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "mombre",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "edad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ciudad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "via_acceso",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "asignaturas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "intereses",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mombre": {
+      "main": [
+        [
+          {
+            "node": "Telegram5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "edad": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ciudad": {
+      "main": [
+        [
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "via_acceso": {
+      "main": [
+        [
+          {
+            "node": "Telegram3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "asignaturas": {
+      "main": [
+        [
+          {
+            "node": "Telegram4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "intereses": {
+      "main": [
+        [
+          {
+            "node": "Telegram6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stater": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Stater",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Stater",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Stater",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "createStudent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram7": {
+      "main": [
+        [
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Supabase4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase3": {
+      "main": [
+        []
+      ]
+    },
+    "Code Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Stater",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram8": {
+      "main": [
+        []
+      ]
+    },
+    "Supabase4": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "createStudent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Telegram8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ef97854c-0056-42b2-9b5a-6116b714253f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f6f850d627815693bd9e105c6c096d5d573cc1f5bde5fb667e48f444cb3574b"
+  },
+  "id": "QJZpERGz61RvlS17",
+  "tags": []
+}

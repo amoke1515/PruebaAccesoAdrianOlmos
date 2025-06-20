@@ -1,0 +1,1005 @@
+{
+  "name": "Laboratorio 1",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9897b60c-8ccf-4ae3-8175-35f95ba2ef7d",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "saludo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "saludo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "orientacion_academica",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "a63796b3-657f-4816-be87-033629e34e93"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "orientacion_academica"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "652d5009-d412-4a61-8a1e-b7211598fabb",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "inicio_matricula",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "inicio_matricula"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "eb1324da-f9fa-4f10-9e93-e4388e28add8",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "consulta_requisitos",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "consulta_requisitos"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1f3b4b34-5bdd-422e-b38f-b693f0f4f71f",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "orientacion_academica",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "orientacion_academica"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0a26e4f7-0cfe-4309-85b4-c5e28a93b781",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "informacion_grupos_acceso",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $json.message.content.rama }}"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7b795329-1284-4c9c-8088-f45024adb66c",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "consulta_nota",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $json.message.content.rama }}"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5fc69cd2-8eef-4af1-96e3-9352816935a7",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "info_grado",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "info_grado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "70569f04-4f2f-448a-b361-5924d1ac90af",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "plazos_fechas",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "plazos_fechas"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2e7a7d3b-26f2-4d49-a5aa-3eb2da099993",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "contacto_humano",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "contacto_humano"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5fa30ba2-c1a5-48a6-9884-cb6fde68acc8",
+                    "leftValue": "={{ $json.message.content.rama }}",
+                    "rightValue": "agradecimiento_despedida",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "agradecimiento_despedida"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "aae8159f-a4cd-44b2-8de1-7daca9f5b544",
+                    "leftValue": "={{ $json.message.content.etiqueta }}",
+                    "rightValue": "otro",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "otro"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1640,
+        -360
+      ],
+      "id": "8921088a-0d6b-43da-878c-f80cf4fce50f",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.message }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -860,
+        -660
+      ],
+      "id": "78b795b9-7ede-4cc6-ab81-8d96c4997e36",
+      "name": "Telegram",
+      "webhookId": "f806ce7e-cb6d-44d0-b219-440d8839cb01",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"message\": \"¡Hola! 👋 Soy tu asistente para orientación universitaria. 🎓\\n\\nAntes de poder ayudarte bien, necesito conocerte un poco más. Vamos a rellenar un formulario rápido para ofrecerte una mejor orientación.\\n\\n Rellena el formulario aquí \\n\\n https://amoke15.app.n8n.cloud/form-test/15b64663-0f98-498f-a499-1acb36c77a0d\"\n}\n",
+        "includeOtherFields": "={{ false }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1140,
+        -660
+      ],
+      "id": "85d57fa4-0c00-479d-beee-6a0deb77437a",
+      "name": "SaludoMsg"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5ac01723-bfae-4442-a86c-99a55967c071",
+              "leftValue": "={{ $json.message.content.content }}",
+              "rightValue": "inicial",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2060,
+        20
+      ],
+      "id": "08d14efa-f431-4bc5-9ccb-041e0084aa35",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "formTitle": "Encuentra tu camino universitario – Formulario inicial",
+        "formDescription": "🎓  Para ayudarte a encontrar las carreras universitarias que mejor encajan contigo, necesito conocerte un poco mejor. \n😊 Completa este breve formulario con tus intereses, habilidades y situación actual.  🚀 ",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "1. Nombre completo"
+            },
+            {
+              "fieldLabel": "2. Edad",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "3. ¿Cuál es tu nivel educativo actual?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Bachillerato (o equivalente)"
+                  },
+                  {
+                    "option": "CFGS / Formación Profesional"
+                  },
+                  {
+                    "option": "Universidad incompleta"
+                  },
+                  {
+                    "option": "Trabajador sin estudios recientes"
+                  },
+                  {
+                    "option": "Otro"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "4. ¿En qué áreas tienes más interés?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Ciencias de la salud"
+                  },
+                  {
+                    "option": "Ciencias sociales"
+                  },
+                  {
+                    "option": "Ingeniería y tecnología"
+                  },
+                  {
+                    "option": "Artes y humanidades"
+                  },
+                  {
+                    "option": "Educación"
+                  },
+                  {
+                    "option": "Negocios y economía"
+                  },
+                  {
+                    "option": "Derecho"
+                  },
+                  {
+                    "option": "Ciencia pura (matemáticas, física, química)"
+                  },
+                  {
+                    "option": "No lo sé aún"
+                  }
+                ]
+              },
+              "multiselect": true,
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "5. ¿Qué tipo de actividades disfrutas más?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Resolver problemas"
+                  },
+                  {
+                    "option": "Crear cosas nuevas"
+                  },
+                  {
+                    "option": "Ayudar a los demás"
+                  },
+                  {
+                    "option": "Analizar datos"
+                  },
+                  {
+                    "option": "Enseñar o comunicar"
+                  },
+                  {
+                    "option": "Organizar y gestionar"
+                  },
+                  {
+                    "option": "Trabajar al aire libre"
+                  },
+                  {
+                    "option": "Usar tecnología"
+                  }
+                ]
+              },
+              "multiselect": true,
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "6. ¿Qué materias se te daban mejor en la escuela/instituto?",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "7. ¿Quieres una carrera más práctica, teórica o una mezcla?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Práctica (FP, trabajos de campo, laboratorio)"
+                  },
+                  {
+                    "option": "Teórica (investigación, análisis, pensamiento abstracto)"
+                  },
+                  {
+                    "option": "Mixta"
+                  },
+                  {
+                    "option": "No lo sé aún"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "8 ¿Cuál fue tu nota media de acceso?",
+              "fieldType": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -1160,
+        -80
+      ],
+      "id": "ef98397a-b1c3-46b4-b582-66215e0b048c",
+      "name": "On form submission",
+      "webhookId": "15b64663-0f98-498f-a499-1acb36c77a0d"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0b40710-fd5f-4fef-958d-461f6ac5bff3",
+              "name": "Nombre",
+              "value": "={{ $json['1. Nombre completo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "70110296-99c0-49de-b045-df79ce5462eb",
+              "name": "Edad",
+              "value": "={{ $json['2. Edad'] }}",
+              "type": "number"
+            },
+            {
+              "id": "44cced97-8b38-4e88-ac30-312d3dd9c63e",
+              "name": "Grupo",
+              "value": "={{ $json['3. ¿Cuál es tu nivel educativo actual?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d11b1a78-0e89-424d-a05c-6a3a33bf847f",
+              "name": "Intereses",
+              "value": "={{ $json['4. ¿En qué áreas tienes más interés?'][0] }}",
+              "type": "string"
+            },
+            {
+              "id": "a2f1febc-b6ee-4331-88d2-a66a63f0b338",
+              "name": "Asignaturas",
+              "value": "={{ $json['6. ¿Qué materias se te daban mejor en la escuela/instituto?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "f3c4b907-3753-4218-8cf5-6e75dba25aa1",
+              "name": "Tipo de Carrera",
+              "value": "={{ $json['6. ¿Qué materias se te daban mejor en la escuela/instituto?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "ff5ac417-a2b8-43aa-861c-96b69ba2e4e2",
+              "name": "Nota EVAU",
+              "value": "={{ $json['8 ¿Cuál fue tu nota media de acceso?'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -980,
+        -80
+      ],
+      "id": "afab6f80-a3cf-4e32-a383-dc59518ac126",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "18j9caMkqI6f_F1D29jr_bL71hFFk3FYIc28J_P0z4sI",
+          "mode": "list",
+          "cachedResultName": "BBDD_EDUBOOT",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18j9caMkqI6f_F1D29jr_bL71hFFk3FYIc28J_P0z4sI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18j9caMkqI6f_F1D29jr_bL71hFFk3FYIc28J_P0z4sI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre": "={{ $json.Nombre }}",
+            "Edad": "={{ $json.Edad }}",
+            "Grupo ": "={{ $json.Grupo }}",
+            "Intereses": "={{ $json.Intereses }}",
+            "Asignaturas": "={{ $json.Asignaturas }}",
+            "Tipo Carrera": "={{ $json['Tipo de Carrera'] }}",
+            "Nota Evau": "={{ $json['Nota EVAU'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Edad",
+              "displayName": "Edad",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Grupo ",
+              "displayName": "Grupo ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Intereses",
+              "displayName": "Intereses",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Asignaturas",
+              "displayName": "Asignaturas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo Carrera",
+              "displayName": "Tipo Carrera",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nota Evau",
+              "displayName": "Nota Evau",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -780,
+        -80
+      ],
+      "id": "21bc1d35-9ab8-4f53-aa2a-f243d3dd58b9",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Lwmo8aij1apha3Vw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -560,
+        -80
+      ],
+      "id": "0862dc7b-fa0e-4be2-a713-32273715be7b",
+      "name": "Telegram2",
+      "webhookId": "9f720b24-d36a-4d0e-a9e4-b09e94619303",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -640,
+        -660
+      ],
+      "id": "d93c5b3d-8992-45a0-bee7-1a8ff637300a",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2720,
+        20
+      ],
+      "id": "cea187d1-bd99-48c7-9a96-54ddcdd130c5",
+      "name": "Telegram Trigger1",
+      "webhookId": "57d0fdfc-72bc-4a4e-ae4f-c4707b2600a4",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -2460,
+        20
+      ],
+      "id": "1b8cd0ff-552e-4232-a18e-22d766d7ccef",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -2500,
+        220
+      ],
+      "id": "b1e27b63-6e62-4279-9b31-37a1c9c67b01",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "G43qNDtMbEN59XZv",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -2340,
+        240
+      ],
+      "id": "8dcf0281-eee5-4f51-9284-beb127c1f198",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -340,
+        -80
+      ],
+      "id": "304b520f-d007-49cc-ad5f-16fefbde6f33",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "G43qNDtMbEN59XZv",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "SaludoMsg",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    "SaludoMsg": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram2": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d6335f82-e7ce-48db-890c-7453e342b1b0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "691dc19243ad572e8815fe53086383be39fc134e29ecf19a4fcfe8f97ae4fa8c"
+  },
+  "id": "NZwz5PT1LL3PGOHQ",
+  "tags": []
+}

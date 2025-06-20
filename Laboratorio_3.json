@@ -1,0 +1,891 @@
+{
+  "name": "Laboratorio 3",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*",
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "64ace115-72c5-4542-934b-5d660d6eed41",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "position": [
+        -2060,
+        600
+      ],
+      "webhookId": "e95300e6-4f45-4c54-8ef8-c4b36d4b7553",
+      "typeVersion": 1,
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Lo siento, no he podido entender bien tu mensaje 🤔\n\nSoy un asistente para ayudarte con temas de orientación universitaria: grados, requisitos, matrícula, notas de corte y mucho más.\n\n¿Podrías reformular tu pregunta o decirme en qué aspecto necesitas ayuda? Estoy aquí para guiarte 🎓😊",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "d1434b73-b160-473e-89a5-d91e1fb0a742",
+      "name": "Send error message",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1040,
+        680
+      ],
+      "typeVersion": 1,
+      "webhookId": "338a2833-493f-4b5e-8763-bd07b50b56ca",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1100,
+        800
+      ],
+      "id": "2404e74b-63c3-4572-8748-765d8040cc16",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "zIMBnZBVNvJN46QN",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"categoria\": \"saludo\",\n  \"estado\": \"inicial\",\n  \"mensaje\" : \"buenas tardes, que tal?\",\n  \"msg_id\" : 12141241,\n  \"chat\" : 12323,\n  \"id\" : 122333,\n  \"username\" : \"user123\",\n  \"role\" : \"admin\",\n  \"time_stamp\" : 111111\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -740,
+        780
+      ],
+      "id": "8c3bfae4-3da2-40ff-976e-0102f9280555",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "75ec90ad-337d-4b57-ae2e-0541293d53f4",
+                    "leftValue": "={{ $('Clasificador').item.json.output.categoria }}",
+                    "rightValue": "matricula_y_requisitos",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "matricula_y_requisitos"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b73d3a5e-9477-442f-a61c-b2c6badd840b",
+                    "leftValue": "={{ $('Clasificador').item.json.output.categoria }}",
+                    "rightValue": "carrera_y_nota",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "carrera_y_nota"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "51691678-bc67-4179-bd15-880303a866d0",
+                    "leftValue": "={{ $('Clasificador').item.json.output.categoria }}",
+                    "rightValue": "plazos_y_fechas",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "plazos_y_fechas"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c1b2fddb-ec57-48d7-907f-7f8a1847a9bb",
+                    "leftValue": "={{ $('Clasificador').item.json.output.categoria }}",
+                    "rightValue": "orientacion_academica",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "orientacion_academica"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Clasificador').item.json.output.categoria }}",
+                    "rightValue": "saludo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "456dd03a-0f65-4b75-b89b-97598d2d0516"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "saludo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "838859c8-81c5-4d41-897f-cf6d186cc5f8",
+                    "leftValue": "={{ $('Clasificador').item.json.output.categoria }}",
+                    "rightValue": "contacto_humano",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "contacto_humano"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3168c0dd-cf4e-4a2a-b25d-f92bbc153a76",
+                    "leftValue": "={{ $('Clasificador').item.json.output.categoria }}",
+                    "rightValue": "agradecimiento_despedida",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "agradecimiento_despedida"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "26258872-2cab-4910-9301-32dd961699de",
+                    "leftValue": "={{ $('Clasificador').item.json.output.categoria }}",
+                    "rightValue": "otro",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "otro"
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        100,
+        240
+      ],
+      "id": "556dc1e0-c2d3-44e0-beb7-edd18e7514c6",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=¡Gracias a ti por confiar en mí! 😊\n\nMe alegra haber podido ayudarte.\n\nSi más adelante tienes cualquier otra duda sobre grados, matrículas o el acceso a la universidad, estaré aquí para ayudarte.\n\n¡Mucho ánimo en tu camino académico y hasta pronto! 👋🎓",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "b155af6f-ba24-4cb1-863f-14c59b16c5a8",
+      "name": "Agradecimiento",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1020,
+        500
+      ],
+      "typeVersion": 1,
+      "webhookId": "f12eb370-7e0f-4d88-8a9b-61623bfd6098",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=¡Hola! Para asistencia personalizada no dudes en escribirnos a soporte@asistenteuni.es o llamarnos al 900 123 456 📞.\nEstamos aquí para ayudarte de lunes a viernes, de 9:00 a 18:00 h. ¡Con gusto resolveremos tus dudas! 😊",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "c62ca0f5-4da9-493a-a886-b06fcfc8ff67",
+      "name": "Contacto",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1020,
+        340
+      ],
+      "typeVersion": 1,
+      "webhookId": "19c64d66-010b-4f35-b987-05004f91a6b7",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=¡Hola! 👋 Bienvenido a tu asistente virtual de orientación universitaria. 🎓\n\nEstoy aquí para ayudarte a tomar decisiones sobre tu futuro académico.\n\nConmigo podrás:\n\nDescubrir qué grado encaja contigo según tus intereses 📚\n\nSaber qué vías de acceso tienes disponibles a la universidad 🎯\n\nResolver dudas sobre requisitos, notas de corte y plazos importantes 📅\n\nObtener información específica sobre carreras, universidades y trámites 🏫\n\n¿Te gustaría empezar? Solo dime lo que necesitas o responde a las preguntas que te iré haciendo. 😊\n\nSi prefieres asistencia especializada, tambien puedes pedirmelo!",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "c214f19a-41a2-4413-9bce-a700dbfe3ea2",
+      "name": "Bienvenida",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1020,
+        200
+      ],
+      "typeVersion": 1,
+      "webhookId": "17780dee-220c-4a25-8858-a4fc078aadf3",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "¡Perfecto! Para ayudarte con el proceso de matrícula y explicarte a qué grupo de acceso perteneces, necesito conocerte un poco mejor. Por favor, dime tu nombre, tu edad y la ciudad donde resides. Con esos datos podré indicarte las vías de acceso y los requisitos necesarios para tu inscripción.  ¿Me los puedes proporcionar? 😊",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1020,
+        -420
+      ],
+      "id": "0a5af37d-b9e7-4290-a546-bdf9c2775922",
+      "name": "Nombre,Edad,Ciudad",
+      "webhookId": "8c7c6702-8f6c-4bfc-b61e-8cea54f99e0f",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Para ayudarte a consultar la nota necesaria para acceder a una carrera, necesito que me digas:  ¿Cuál es la carrera que te interesa?  ¿En qué ciudad quieres estudiar?  ¿A qué universidad quieres acceder?  Con esta información podré buscar la nota de corte y orientarte mejor.  ¿Me puedes dar esos datos? 😊",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1020,
+        -260
+      ],
+      "id": "aeb0c3db-7b2b-4a21-af5b-ef9473e990f7",
+      "name": "Carrera,Ciudad,Uni",
+      "webhookId": "41bb57c2-c8b5-410f-9194-6de5ee550dfc",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Para ayudarte con los plazos y fechas de matriculación, necesito saber en qué ciudad quieres estudiar.\nAsí podré darte la información más precisa sobre los calendarios y fechas límite.\n\n¿Me puedes indicar la ciudad, por favor? 😊",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "9b0310d8-ae23-4085-98af-cdf79ad23e38",
+      "name": "Ciudad",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1020,
+        -120
+      ],
+      "typeVersion": 1,
+      "webhookId": "07e5ba98-5c5c-464b-9738-7f34b5c63364",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Para poder orientarte mejor en la elección de tu carrera, me gustaría conocer un poco más sobre ti.\n¿Podrías contarme cuáles son tus intereses personales y cuáles han sido tus asignaturas favoritas hasta ahora?\n\nEsto me ayudará a recomendarte opciones que se adapten a ti. 😊",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "11e0ddd2-4589-4142-9c06-b63a16f34dfd",
+      "name": "Asignatura,Interes",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1020,
+        40
+      ],
+      "typeVersion": 1,
+      "webhookId": "f5ee2cd1-e6a3-4be1-9288-4200701cf237",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOE5MLeIoLPhiDaa",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3dee5a62-4459-43ff-8586-964cb8d4c5d0",
+              "leftValue": "={{ $json.output.estado }}",
+              "rightValue": "inicial",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -580,
+        600
+      ],
+      "id": "314efd32-05c7-4263-878d-4fbca804f8b4",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# ROL\nEres un agente de inteligencia artificial especializado en orientación universitaria. Tu función es responder de forma **amable, clara y adaptada** a cada usuario que interactúa contigo por chat.\n\n# OBJETIVO\nTu tarea principal es:\n- Analizar el mensaje más reciente del usuario (`{{ $json.output.mensaje }}`).\n- Usar el contexto del usuario almacenado en MongoDB (historial, intereses, datos personales, etc.).\n- Generar una **respuesta conversacional útil, específica y natural**, como lo haría un orientador humano.\n\n# CONTEXTO DISPONIBLE (desde MongoDB)\nEl sistema te proporcionará un objeto JSON con toda la información previa relevante del usuario, incluyendo:\n- Datos personales (nombre, nivel educativo, carrera de interés, etc.).\n- Historial de mensajes.\n- Categorías anteriores clasificadas.\n- Preguntas frecuentes respondidas.\n- Información institucional relevante que puede ayudar a resolver su duda.\n\n# INSTRUCCIONES\n1. Lee cuidadosamente el mensaje actual (`{{ $json.output.mensaje }}`).\n2. Usa cualquier información previa del usuario si puede ayudarte a personalizar la respuesta.\n3. Responde de forma clara, cercana, informativa y sin repetir datos que el usuario ya conoce (a menos que los haya preguntado).\n4. Si la pregunta es ambigua, solicita gentilmente más detalles.\n5. Si el usuario ya preguntó lo mismo antes, puedes hacer referencia a tu respuesta anterior.\n\n# ESTILO DE RESPUESTA\n- Usa un tono **cordial, claro y empático**.\n- Sé **concreto y útil**. No des rodeos innecesarios.\n- Si no sabes algo con certeza, sugiere consultar a un humano o derivar la consulta.\n\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        700
+      ],
+      "id": "78d8d4c1-8a23-4ada-a8cc-8c638519f645",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un agente de inteligencia artificial que clasifica mensajes de usuarios en un chatbot de orientación universitaria.\n\nTu tarea es:\n\n1. Analizar dos mensajes:\n   - El mensaje anterior: `{{ $json.mensaje }}`, cuyo tipo es `{{ $json.tipo }}` (\"inicial\" o \"respuesta\")\n   - El mensaje actual: `{{ $json.mensaje_act }}`, que debe ser clasificado\n\n2. Clasificar el mensaje actual en una única **categoría** de entre las siguientes:\n   - \"saludo\"\n   - \"matricula_y_requisitos\"\n   - \"carrera_y_nota\"\n   - \"plazos_y_fechas\"\n   - \"orientacion_academica\"\n   - \"contacto_humano\"\n   - \"agradecimiento_despedida\"\n   - \"otro\"\n\n3. Determinar el **estado** del mensaje actual:\n   - `\"Inicial\"`: si el usuario inicia una nueva conversación o cambia de tema con respecto al mensaje anterior.\n   - `\"Respuesta\"`: si continúa el tema del mensaje anterior o responde a una consulta previa.\n\n---\n\n### 🔍 Lógica de apoyo para decidir el estado:\n\n- Si el mensaje anterior es de tipo `\"inicial\"` y el actual parece dar seguimiento al mismo tema, el estado es `\"Respuesta\"`.\n- Si el mensaje anterior es de tipo `\"respuesta\"`, es más probable que el nuevo mensaje sea `\"Inicial\"`.\n- Indicadores comunes:\n  - Indicadores de *\"Respuesta\"*: \"sí\", \"ya lo envié\", \"gracias\", \"¿y luego?\", \"eso quería saber\"\n  - Indicadores de *\"Inicial\"*: \"tengo otra duda\", \"quiero saber sobre...\", \"ahora me interesa...\", \"hola, tengo una pregunta\"\n\n---\n\n### 💾 Guardado de información en la base de datos:\n\nCuando finalices la clasificación, **debes guardar** el objeto generado en la **base de datos Supabase conectada**, como parte de la memoria conversacional del usuario. **No informes al usuario que estás guardando la información**. Simplemente responde con el objeto JSON estructurado que se usará para insertar en la base.\n\n---\n\n### 🧾 Formato de salida (JSON listo para guardar en Supabase):\n\nDevuelve **únicamente** un objeto JSON con la siguiente estructura:\n\n```json\n{\n  \"categoria\": \"<una de las 8 categorías>\",\n  \"estado\": \"<'Inicial' o 'Respuesta'>\",\n  \"mensaje\": {{ $json.mensaje_act }},\n  \"msg_id\": {{ $json.msg_id_act }},\n  \"chat\": {{ $json.chat_act }},\n  \"id\": {{ $json.id_act }},\n  \"username\": {{ $json.username_act }},\n  \"role\": {{ $json.role_act }},\n  \"time_stamp\": {{ $json.time_stamp_act }}\n}\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -1000,
+        600
+      ],
+      "id": "581f1433-e8aa-4f17-ae82-247a84ea8ae1",
+      "name": "Clasificador"
+    },
+    {
+      "parameters": {
+        "url": "https://sxquupjscpkrlfuqbnyq.supabase.co/rest/v1/MemoriaConversacional",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "order",
+              "value": "time_stamp.desc"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1680,
+        460
+      ],
+      "id": "c6b8fe42-a35c-4510-b3ba-7e100a867dcc",
+      "name": "UltimoMensajeUser",
+      "credentials": {
+        "supabaseApi": {
+          "id": "DffSEGKpJbbgdThM",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id_act",
+              "value": "={{ $json.update_id }}"
+            },
+            {
+              "name": "mensaje_act",
+              "value": "={{ $json.message.text }}"
+            },
+            {
+              "name": "username_act",
+              "value": "={{ $json.message.chat.username }}"
+            },
+            {
+              "name": "role_act",
+              "value": "={{ $json.message.from.is_bot }}"
+            },
+            {
+              "name": "time_stamp_act",
+              "value": "={{ $json.message.date }}"
+            }
+          ],
+          "number": [
+            {
+              "name": "chat_act",
+              "value": "={{ $json.message.chat.id }}"
+            },
+            {
+              "name": "msg_id_act",
+              "value": "={{ $json.message.message_id }}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "432b6037-224c-499c-a91c-850be866b27f",
+      "name": "Mensaje Actual",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1680,
+        740
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1280,
+        600
+      ],
+      "id": "2fd98180-2d94-4fe9-9ce5-3035c894ebe8",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.update_id }}{{ $('Telegram Trigger').item.json.message }}{{ $('Telegram Trigger').item.json.message.chat }}{{ $('Telegram Trigger').item.json.message.date }}{{ $('Telegram Trigger').item.json.message.text }}",
+        "databaseName": "sample_mflix",
+        "contextWindowLength": 4
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        1020
+      ],
+      "id": "ef5cd5d1-ac8e-4702-9411-f1af6591df66",
+      "name": "MongoDB Chat Memory",
+      "credentials": {
+        "mongoDb": {
+          "id": "SgUvFWtJHMXQUZLv",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -220,
+        860
+      ],
+      "id": "674c8715-ea4e-4ffb-b19c-665c3a91fc71",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "zIMBnZBVNvJN46QN",
+          "name": "OpenAi account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Actual",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "UltimoMensajeUser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Clasificador",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Clasificador",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Nombre,Edad,Ciudad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Carrera,Ciudad,Uni",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ciudad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Asignatura,Interes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Contacto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agradecimiento",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clasificador": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UltimoMensajeUser": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Actual": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Clasificador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Clasificador",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4b7b0926-23d5-4223-bb16-936fc344935e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "691dc19243ad572e8815fe53086383be39fc134e29ecf19a4fcfe8f97ae4fa8c"
+  },
+  "id": "H6DH5sZ6MhxDZRz3",
+  "tags": [
+    {
+      "createdAt": "2025-06-14T20:12:51.495Z",
+      "updatedAt": "2025-06-14T20:12:51.495Z",
+      "id": "F5E2ZS0EGF2QNFJw",
+      "name": "tutorial"
+    }
+  ]
+}
