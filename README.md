@@ -45,7 +45,7 @@ En cada paso, un **agente de IA** recibe el mensaje del estudiante junto con el 
 
 ---
 
-## ✉️ Subworkflow de Generación de Correo
+## ✉️ Subworkflow de Generación de Correo (No implementado aun, es un evolutivo)
 
 Una vez finalizada la conversación, se lanza un subworkflow que:
 
